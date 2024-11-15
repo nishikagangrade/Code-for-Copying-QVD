@@ -1,0 +1,15 @@
+for each i in FileList('lib://SET PROD_Conn/Global_SET/1.QVD/1.Extract/Extract_Fact/SEEA_Extract/SEEA_POWER*')
+trace $(i);
+//Let j= FileName('lib://SET PROD_Conn/Global_SET/1.QVD/1.Extract/Extract_Fact/FX_Exposure/Emission_Exposure_Data_Aug 2024.QVD');
+//trace $(j);
+ 
+let j= SubField('$(i)', '/',-1);
+trace $(j);
+Tab1:
+Load  * from $(i)(qvd);
+
+Store * from Tab1 into [lib://QSC_QLIK_SHARE/Global_SET/1.QVD/1.Extract/Extract_Fact/SEEA_Extract/$(j)](qvd);
+DROP TABLE Tab1;
+next i;
+ 
+exit Script;
